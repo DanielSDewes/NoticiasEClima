@@ -14,7 +14,7 @@ const showLoginBtn = document.getElementById('show-login-btn');
 const searchInput = document.getElementById('search-input');
 const searchBtn = document.getElementById('search-btn');
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = 'https://noticiaseclima-production.up.railway.app';
 
 // Alternar para formulário de registro
 showRegisterBtn.addEventListener('click', () => {
