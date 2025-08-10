@@ -92,9 +92,7 @@ app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-    "https://noticias-e-clima.vercel.app/",
-    "http://127.0.0.1:5500/",], 
+    allow_origins=["https://noticias-e-clima.vercel.app","http://127.0.0.1:5500"],  # domínio do seu frontend
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
