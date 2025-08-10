@@ -1,0 +1,267 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #e0f2f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Container ocupa quase toda a tela com bordas arredondadas */
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 98vw;
+  height: 98vh;
+  max-width: 98vw;
+  max-height: 98vh;
+  background: #043927cc;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* Formulários login e registro */
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  gap: 1rem;
+  background: #0b3c26;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+form.hidden-form {
+  display: none;
+}
+
+form.active-form {
+  display: flex;
+}
+
+input {
+  padding: 0.7rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+}
+
+button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 0.8rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #388e3c;
+}
+
+.error-msg {
+  color: #ffbaba;
+  font-size: 0.9rem;
+  height: 1.2rem;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: #81c784;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 1rem;
+  padding: 0;
+}
+
+/* Dashboard */
+.dashboard {
+  display: none;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.dashboard.active {
+  display: flex;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #4caf50;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+#welcome-msg {
+  color: #a5d6a7;
+  flex: 1;
+  font-size: 1.5rem;
+}
+
+.header-weather {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 120px;
+  color: #a5d6a7;
+  font-size: 0.9rem;
+}
+
+.header-weather .temp {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #81c784;
+  margin-bottom: 0.1rem;
+}
+
+header button {
+  background: #ef5350;
+  color: white;
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+header button:hover {
+  background: #b71c1c;
+}
+
+/* Search Container */
+.search-container {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  max-width: 600px;
+}
+
+#search-input {
+  flex-grow: 1;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  font-size: 1rem;
+}
+
+#search-btn {
+  padding: 0.5rem 1.2rem;
+  background-color: #4caf50;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#search-btn:hover {
+  background-color: #388e3c;
+}
+
+/* Lista de notícias */
+#news-list {
+  list-style: none;
+  padding-left: 0;
+  overflow-y: auto;
+  max-height: calc(100% - 60px);
+}
+
+#news-list li {
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid #2c6b4e;
+}
+
+#news-list li strong {
+  font-size: 1.1rem;
+  color: #fff;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+#news-list li p {
+  font-size: 0.9rem;
+  color: #a5d6a7;
+  margin-bottom: 0.2rem;
+}
+
+#news-list li a {
+  color: #4caf50;
+  text-decoration: none;
+}
+
+#news-list li a:hover {
+  text-decoration: underline;
+}
+
+/* Scroll suave para área principal */
+main::-webkit-scrollbar {
+  width: 8px;
+}
+main::-webkit-scrollbar-thumb {
+  background: #4caf50;
+  border-radius: 10px;
+}
+main::-webkit-scrollbar-track {
+  background: #043927;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  @media (max-width: 768px) {
+  form {
+    max-width: 100%;
+    padding: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Ajuste para mover o clima para baixo do welcome e botão logout */
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  #welcome-msg {
+    order: 1;
+  }
+
+  #logout-btn {
+    order: 2;
+    align-self: stretch;
+  }
+
+  #weather {
+    order: 3;
+    width: 100%;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Alinhamento interno do clima */
+  .header-weather .temp,
+  .header-weather .condition,
+  .header-weather .location {
+    text-align: left;
+  }
+}
+
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Monitor Financeiro - Login</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+
+    <!-- Login Form -->
+    <form id="login-form" class="active-form" autocomplete="off">
+      <h2>Entrar</h2>
+      <input type="text" id="login-username" placeholder="Usuário" required minlength="4" />
+      <input type="password" id="login-password" placeholder="Senha" required minlength="4" />
+      <button type="submit">Entrar</button>
+      <p class="error-msg" id="login-error-msg"></p>
+      <p>Não tem conta? <button type="button" class="link-btn" id="show-register-btn">Registrar-se</button></p>
+    </form>
+
+    <!-- Register Form -->
+    <form id="register-form" class="hidden-form" autocomplete="off">
+      <h2>Registrar-se</h2>
+      <input type="text" id="register-username" placeholder="Usuário" required minlength="4" />
+      <input type="password" id="register-password" placeholder="Senha" required minlength="4" />
+      <button type="submit">Registrar</button>
+      <p class="error-msg" id="register-error-msg"></p>
+      <p>Já tem conta? <button type="button" class="link-btn" id="show-login-btn">Entrar</button></p>
+    </form>
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="dashboard">
+      <header>
+        <h2 id="welcome-msg">Bem-vindo!</h2>
+        <div id="weather" class="header-weather">
+          <div class="temp">--°C</div>
+          <div class="condition">Carregando...</div>
+          <div class="location"></div>
+        </div>
+        <button id="logout-btn">Sair</button>
+      </header>
+
+      <div class="search-container">
+        <input type="text" id="search-input" placeholder="Pesquisar notícias por palavra-chave..." />
+        <button id="search-btn">Pesquisar</button>
+      </div>
+
+      <main>
+        <ul id="news-list"></ul>
+      </main>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
