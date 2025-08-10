@@ -14,24 +14,24 @@ const showLoginBtn = document.getElementById('show-login-btn');
 const searchInput = document.getElementById('search-input');
 const searchBtn = document.getElementById('search-btn');
 
-const API_BASE_URL = 'http://localhost:8000'; // ajuste conforme backend
+const API_BASE_URL = 'http://localhost:8000';
 
+// Alternar para formulário de registro
 showRegisterBtn.addEventListener('click', () => {
   loginForm.classList.remove('active-form');
   loginForm.classList.add('hidden-form');
   registerForm.classList.remove('hidden-form');
   registerForm.classList.add('active-form');
-
   loginErrorMsg.textContent = '';
   registerErrorMsg.textContent = '';
 });
 
+// Alternar para formulário de login
 showLoginBtn.addEventListener('click', () => {
   registerForm.classList.remove('active-form');
   registerForm.classList.add('hidden-form');
   loginForm.classList.remove('hidden-form');
   loginForm.classList.add('active-form');
-
   loginErrorMsg.textContent = '';
   registerErrorMsg.textContent = '';
 });
@@ -59,15 +59,10 @@ async function fetchMarketData(query = "finance") {
     url.searchParams.append("q", query);
 
     const response = await fetch(url, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
+      headers: { 'Authorization': `Bearer ${token}` },
     });
 
-    if (!response.ok) {
-      throw new Error('Falha ao carregar dados do mercado');
-    }
-
+    if (!response.ok) throw new Error('Falha ao carregar dados do mercado');
     const data = await response.json();
     renderMarketData(data);
 
@@ -78,7 +73,7 @@ async function fetchMarketData(query = "finance") {
 
 searchBtn.addEventListener('click', () => {
   const query = searchInput.value.trim();
-  if (query.length === 0) {
+  if (!query) {
     alert("Digite uma palavra-chave para pesquisa.");
     return;
   }
@@ -86,18 +81,16 @@ searchBtn.addEventListener('click', () => {
 });
 
 async function showDashboard(username) {
-  loginForm.style.display = 'none';
-  registerForm.style.display = 'none';
+  loginForm.classList.remove('active-form');
+  loginForm.classList.add('hidden-form');
+  registerForm.classList.remove('active-form');
+  registerForm.classList.add('hidden-form');
+
   dashboard.classList.add('active');
   welcomeMsg.textContent = `Bem-vindo, ${username}!`;
 
-  try {
-    fetchMarketData();  // carrega notícias padrão finance
-    fetchWeather();
-
-  } catch (error) {
-    alert(error.message);
-  }
+  fetchMarketData();
+  fetchWeather();
 }
 
 function renderMarketData(data) {
@@ -111,93 +104,64 @@ function renderMarketData(data) {
 
   data.data.slice(0, 6).forEach(item => {
     const li = document.createElement('li');
-
     const title = document.createElement('strong');
     title.textContent = item.title;
-    title.style.color = '#fff';
-
     const source = document.createElement('p');
-    source.style.fontSize = '0.9rem';
-    source.style.color = '#a5d6a7';
     source.textContent = `Fonte: ${item.source?.name || "Desconhecida"}`;
-
     const url = document.createElement('a');
     url.href = item.url;
     url.target = '_blank';
     url.textContent = 'Leia mais';
-    url.style.color = '#4caf50';
-    url.style.textDecoration = 'none';
 
-    li.appendChild(title);
-    li.appendChild(source);
-    li.appendChild(url);
-
+    li.append(title, source, url);
     newsList.appendChild(li);
   });
 }
 
 async function fetchWeather() {
   try {
-    if (!navigator.geolocation) {
-      throw new Error('Geolocalização não suportada');
-    }
+    if (!navigator.geolocation) throw new Error('Geolocalização não suportada');
 
-    const position = await new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(resolve, reject);
-    });
+    const position = await new Promise((res, rej) =>
+      navigator.geolocation.getCurrentPosition(res, rej)
+    );
 
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
-
     const token = getToken();
     const url = new URL(`${API_BASE_URL}/weather`);
     url.searchParams.append("lat", lat);
     url.searchParams.append("lon", lon);
 
     const response = await fetch(url, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
+      headers: { 'Authorization': `Bearer ${token}` },
     });
 
-    if (!response.ok) {
-      throw new Error('Falha ao obter dados do clima');
-    }
-
+    if (!response.ok) throw new Error('Falha ao obter dados do clima');
     const data = await response.json();
     updateWeather(data);
 
   } catch (error) {
-    updateWeather(null, error.message === 'User denied Geolocation' ? "Sem acesso a localização" : "Erro ao obter clima");
+    updateWeather(null, error.message.includes('denied') ? "Sem acesso à localização" : "Erro ao obter clima");
   }
 }
 
 function updateWeather(data, errorMsg) {
   const weatherDiv = document.getElementById('weather');
-
-  if (errorMsg) {
+  if (errorMsg || !data?.current) {
     weatherDiv.querySelector('.temp').textContent = '--';
-    weatherDiv.querySelector('.condition').textContent = errorMsg;
+    weatherDiv.querySelector('.condition').textContent = errorMsg || 'Dados indisponíveis';
     weatherDiv.querySelector('.location').textContent = '';
     return;
   }
-
-  if (!data || !data.current) {
-    weatherDiv.querySelector('.temp').textContent = '--';
-    weatherDiv.querySelector('.condition').textContent = 'Dados indisponíveis';
-    weatherDiv.querySelector('.location').textContent = '';
-    return;
-  }
-
   weatherDiv.querySelector('.temp').textContent = `${data.current.temp_c}°C`;
   weatherDiv.querySelector('.condition').textContent = data.current.condition.text;
-  weatherDiv.querySelector('.location').textContent = data.location.name + ", " + data.location.region;
+  weatherDiv.querySelector('.location').textContent = `${data.location.name}, ${data.location.region}`;
 }
 
 loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   loginErrorMsg.textContent = '';
-
   const username = document.getElementById('login-username').value.trim();
   const password = document.getElementById('login-password').value.trim();
 
@@ -225,7 +189,6 @@ loginForm.addEventListener('submit', async (e) => {
 registerForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   registerErrorMsg.textContent = '';
-
   const username = document.getElementById('register-username').value.trim();
   const password = document.getElementById('register-password').value.trim();
 
@@ -241,14 +204,8 @@ registerForm.addEventListener('submit', async (e) => {
       throw new Error(errorData.detail || 'Falha no registro');
     }
 
-    alert('Registro realizado com sucesso! Agora faça login.');
-
-    registerForm.reset();
-    registerForm.classList.remove('active-form');
-    registerForm.classList.add('hidden-form');
-
-    loginForm.classList.remove('hidden-form');
-    loginForm.classList.add('active-form');
+    alert('Registro realizado com sucesso! Faça login agora.');
+    showLoginBtn.click(); // volta para o login
 
   } catch (error) {
     registerErrorMsg.textContent = error.message;
@@ -258,22 +215,19 @@ registerForm.addEventListener('submit', async (e) => {
 logoutBtn.addEventListener('click', () => {
   clearToken();
   dashboard.classList.remove('active');
-  loginForm.style.display = 'flex';
-  registerForm.style.display = 'none';
+  loginForm.classList.remove('hidden-form');
   loginForm.classList.add('active-form');
   registerForm.classList.remove('active-form');
+  registerForm.classList.add('hidden-form');
   loginErrorMsg.textContent = '';
   registerErrorMsg.textContent = '';
 });
 
 window.addEventListener('DOMContentLoaded', () => {
   if (isLoggedIn()) {
-    // Se quiser salvar username para persistir entre sessões, precisaria implementar armazenamento separado
-    // Por enquanto, mostra "Usuário" ao recarregar
     showDashboard("Usuário");
   } else {
-    loginForm.style.display = 'flex';
-    registerForm.style.display = 'none';
     loginForm.classList.add('active-form');
+    registerForm.classList.add('hidden-form');
   }
 });
