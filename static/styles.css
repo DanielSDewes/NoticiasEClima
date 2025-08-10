@@ -10,6 +10,10 @@ body, html {
   overflow: hidden;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 /* Container ocupa quase toda a tela com bordas arredondadas */
 .container {
   display: flex;
@@ -21,9 +25,10 @@ body, html {
   background: #043927cc;
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-  padding: 2rem;
   box-sizing: border-box;
-}
+  align-items: center;
+  padding-right: 1rem;
+} 
 
 /* Formulários login e registro */
 form {
@@ -233,7 +238,7 @@ main::-webkit-scrollbar-track {
 
   .container {
     padding: 1rem;
-  }
+  } 
 
   header {
     flex-direction: column;
