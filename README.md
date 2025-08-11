@@ -55,13 +55,18 @@ NEWSAPI_API_KEY=sua_chave_newsapi_aqui
 WEATHER_API_KEY=sua_chave_weatherapi_aqui
 ```
 
-4. Rode o servidor:
+4. Ajuste as origens:
+
+Alterar o valor da API_BASE_URL para o local onde seu backend estiver hospedado.
+Alterar as origens na main.py > add_middleware para onde seu frontend estiver hospedado.
+
+5. Rode o servidor:
 
 ```bash
 uvicorn main:app --reload
 ```
 
-5. Abra o navegador em `http://localhost:8000`
+6. Abra o navegador em `http://localhost:8000`
 
 ---
 
