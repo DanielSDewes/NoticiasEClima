@@ -82,11 +82,10 @@ MonitorFinanceiro/
 
 ---
 
-## Deploy no Vercel
+## Deploy
 
-- Configure as variáveis de ambiente (JWT_SECRET, NEWSAPI_API_KEY, WEATHER_API_KEY) no painel do Vercel
-- Faça o deploy normalmente apontando para `main.py`
-- O frontend está servido pela pasta `static`
+- Realize o deploy do frontend no vercel, selecionando a pasta static como fonte.
+- Faça o deploy no railway, após adicionar as váriaveis de ambiente do .env e seus valores.
 
 ---
 
